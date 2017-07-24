@@ -22,9 +22,9 @@ ActivityLifecycleCallbacks activityLifecycleCallbacks = new ActivityLifecycleCal
     
     @Override
     public void onActivityResumed(Activity activity) {
-        if (activity instanceof PresageActivity) {
+        if (activity instanceof SDKXXXActivity) {
             try {
-                SplashScreenManager.getInstance().traverseWebView(activity); // 见下面的 traverseWebView 方法说明
+                traverseWebView(activity); // 见下面的 traverseWebView 方法说明
             } catch (Exception e) {
                e.printStackTrace();
             }
