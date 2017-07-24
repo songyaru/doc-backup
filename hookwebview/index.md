@@ -126,7 +126,7 @@ public static void hookWebView(WebView webView) {
 ``` java
 // xxx 是广告 sdk 中的一个 extends 了 WebViewClient 的类
 // 通过 hookWebView 方法把新扩展的 hook 类动态的插入来满足需求
-// 其中 StartJSCode 和 finishJsCode 的 js 代码也可以通过 CMS 系统根据需求动态的下发。
+// 其中 StartJSCode 和 FinishJSCode 的 js 代码也可以通过 CMS 系统根据需求动态的下发。
 public class HookWebViewClient extends xxx {
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -138,7 +138,7 @@ public class HookWebViewClient extends xxx {
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
-        view.loadUrl("javascript:(function(){" + finishJsCode + "})();"); // 页面加载完成后想做的事情
+        view.loadUrl("javascript:(function(){" + FinishJSCode + "})();"); // 页面加载完成后想做的事情
     }
 	
 }
