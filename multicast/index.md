@@ -2,7 +2,7 @@
 
 ![](1.jpg)
 
-google 发了封邮件，ES 一直持有 Multist Locks 导致耗电量增加。
+google 发了封邮件，ES 一直持有 Multicast Locks 导致耗电量增加。
 
 
 ### 解决方案
