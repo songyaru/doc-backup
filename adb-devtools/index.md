@@ -1,4 +1,4 @@
-## 真机远程调试
+## 真机远程调试技术方案
 
 ### Android 插线远程调试
 ![adb overview](adb.png "adb overview")
@@ -248,8 +248,14 @@ if (this._id !== 'main') {
 - 编译 chromium 的远程调试相关代码
 - 启动一个本地的服务实现端上的页面和开发者工具页面通信
 
+### 相关资料链接
+[adb-devtools](https://www.npmjs.com/package/adb-devtools)
+
+[真机调试安装包](https://smartprogram.baidu.com/docs/develop/debug/remoterelease/)
+
+[控制台使用真机调试](https://smartprogram.baidu.com/docs/develop/debug/remotetargettool/)
+
+
 
 ### 补充
 Android 真机不插线远程调试，以及 IOS 真机插线远程调试也是基于上述思路，后续补充。
-
-
