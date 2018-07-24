@@ -46,7 +46,7 @@ local server 除了包含 inspector 静态资源服务，还启了一个 websock
 socket.on('inspector-server-master-message', (data = {}) => {
     data.from = 'inspector';
     // server 转发给 master
-    io.emiet('server-master-message', data);
+    io.emit('server-master-message', data);
 });
 
 // 接收来自 master 页面的消息
