@@ -25,7 +25,7 @@ forward 转发之后就可以用浏览器打开 http://localhost:4000/json 查�
 
 上述操作封装在 [npm adb-tools](https://www.npmjs.com/package/adb-tools) / [源码](https://github.com/songyaru/adb-tools/)
 
-### Local Inspector Server 本地 inspect 服务 
+### Local Inspector Server 本地 inspector 服务 
 
 #### 1. inspector 静态资源
 通过从 chromium 源码中单独抽取出来重新 build
@@ -250,6 +250,6 @@ if (this._id !== 'main') {
 
 
 ### 补充
-Android 真机不插线远程调试，以及 IOS 真机插线远程调试也是基于上述思路，逐步补充。
+Android 真机不插线远程调试，以及 IOS 真机插线远程调试也是基于上述思路，后续补充。
 
 
