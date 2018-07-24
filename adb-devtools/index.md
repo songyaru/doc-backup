@@ -21,7 +21,7 @@ adb shell cat /proc/net/unix | grep --text  _devtools_remote
 ``` shell
 adb forward tcp:4000 localabstract:webview_devtools_remote_5481
 ```
-forward 转发之后就可以用浏览器打开 http://localhost:4000/json 查看到被调试的页面基础信息，其中 webSocketDebuggerUrl 字段是用于远程调试连接的 websocket
+forward 转发之后就可以用浏览器打开 ```http://localhost:4000/json``` 查看到被调试的页面基础信息，其中 webSocketDebuggerUrl 字段是用于远程调试连接的 websocket
 
 上述操作封装在 [npm adb-tools](https://www.npmjs.com/package/adb-tools) / [源码](https://github.com/songyaru/adb-tools/)
 
@@ -33,11 +33,12 @@ forward 转发之后就可以用浏览器打开 http://localhost:4000/json 查�
 智能小程序在 smartapp 分支: [inspector 源码]( https://github.com/songyaru/devtools-frontend/tree/smartapp)
 
 #### 2. local server
-由于智能小程序是 master / slave 的架构，主页面直负责 js 的执行，slave 页面由 master 控制由数据驱动来渲染显示。因此常规的 inspector 没法同时调试 js 代码又显示页面的 dom 结果等信息。因此需要对 inspector 源码做一些处理。 （[npm adb-devtools ](https://www.npmjs.com/package/adb-devtools) /源码待整理后发布）
+由于智能小程序是 master / slave 的架构，主页面只负责 js 的执行，slave 页面由 master 控制通过数据驱动来渲染显示。常规的 inspector 没法同时调试 js 代码又显示页面的 dom 
+结构等信息。因此需要对 inspector 源码做一些处理。 （[npm adb-devtools ](https://www.npmjs.com/package/adb-devtools) /源码待整理后发布）
 
 ![server overview](ws.png "server overview")
 
-localserver 除了 包含 inspectore 静态资源服务还起了一个 websocket 的后台服务
+local server 除了包含 inspector 静态资源服务，还启了一个 websocket 的后台转发服务
 
 ##### server 消息转发
 ``` javascript
@@ -57,7 +58,7 @@ socket.on('master-server-inspector-message', (data = {}) => {
 ``` 
 server端作为一个消息的中转站，通过 websocket 的双向通信，实现了 inspector 和 master 通信。（master 和 slave 通信类似）
 
-##### android 端内 webview 页面注入 socket
+##### android 端内 webview 页面注入 js
 ``` java
 /**
  * 操作小程序中的 master.html 或 slave.html 文件
@@ -144,7 +145,7 @@ private static void insertBeforeFile(String filePath, String target, String newL
 }
 
 ```
-android 调用上述注入 js 代码 ,核心就是一个 socket.io ,让 webview 页面和 localserver 建立连接
+android 调用上述注入 js 代码 ,核心就是一个 socket.io ,让 webview 页面和 local server 建立连接
 ``` javascript
 let socket = io('http://localhost:8090', {
     'transports': ['websocket', 'polling']
@@ -152,11 +153,11 @@ let socket = io('http://localhost:8090', {
 
 socket.on('server-master-message', data => {...});
 ``` 
-由于本地的 server 没有域名和固定 ip ,如何让手机上的 webview 连接到本地的 server 呢？之前我们用了adb forward 把手机的端口转发到 pc。 adb 同时也提供了 reverse 把 pc 的端口转发给手机
+由于本地的 server 没有域名和固定 ip ,如何让手机上的 webview 连接到本地的 server 呢？之前我们用了adb forward 把手机的端口转发到 PC。 adb 同时也提供了 reverse 把 PC 的端口转发给手机
 ```
 adbTools.reversePort(8090, serverPort);// adb-tools 封装的 api
 ```
-把本机的 serverPort 转发到手机的8090端口，手机 webview 可以通过 localhost:8090 访问 pc 的 serverPort。
+把本地 PC 的 serverPort 转发到手机的8090端口，手机 webview 可以通过 localhost:8090 访问 PC 的 serverPort。
 
 #### 3. 让 inspector 支持同时连接 master 和 slave
 默认情况下，chrome 的 inspector 只支持一个 websocket 连接。 see [Connections.js # 246](https://github.com/songyaru/devtools-frontend/blob/smartapp/front_end/sdk/Connections.js)
@@ -180,7 +181,8 @@ SDK.createMainConnection = function(params, connectionLostCallback) {
   return new SDK.MainConnection(params);
 };
 ```
-通过 ``` http://localhost:8090/devtools/inspector.html?ws=xxx ``` 传入 master 的 webSocketDebuggerUrl。由于 master 页面只是一个js的执行环境，没有dom 结构，我们还需要把 slave 页面连上 inspector。 参见 [adb_custom](https://github.com/songyaru/devtools-frontend/tree/smartapp/front_end/adb_custom/adb_slave_socket.js)
+通过 ``` http://localhost:8090/devtools/inspector.html?ws=xxx ``` 传入 master 的 webSocketDebuggerUrl。由于 master 页面只是一个 js 的执行环境没有dom 结构，我们还需要把 slave 页面连上 inspector。 
+参见 [adb_custom](https://github.com/songyaru/devtools-frontend/tree/smartapp/front_end/adb_custom/adb_slave_socket.js)
 ``` javascript
 // 建立一个连接
 const createSlaveConnection = function (url, isActive) {
@@ -194,7 +196,6 @@ const createSlaveConnection = function (url, isActive) {
     const _createSlaveConnection = params => {
 
         const onDisconnect = message => {
-            console.log('', '-onDisconnect-' + message);
         };
         let wsConnection = new SDK.WebSocketConnection(url, onDisconnect, {
             onMessage: params.onMessage,
