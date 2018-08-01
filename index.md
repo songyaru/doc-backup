@@ -16,7 +16,7 @@
 
 
 ### IOS
-* [如何通过替换签名 debug app](resign-app/)
+* [如何通过替换签名调试 app](resign-app/)
 
 
 
