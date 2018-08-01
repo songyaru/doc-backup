@@ -16,11 +16,9 @@
 
 ![](h3.png)
 
-
 如图所示，账号类型是 Personal Team。关闭该页面
 
 ![](h4.png)
-
 
 Team 中选中刚才创建的账号 （注：如果之前已经有开发者账号，直接选中，不需要上面的步骤）
 勾选了 automatically manage signing 后会自动的加上签名信息。
