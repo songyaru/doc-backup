@@ -2,7 +2,7 @@
 
 工作中的记录
 
-### android
+### Android
 * [hook sdk 中的 webview 页面过程](hookwebview/)
 * [内存泄露-基本原理](memoryleak/basic.html)
 * [内存泄露-问题分析](memoryleak/analyze.html)
@@ -13,6 +13,10 @@
 
 ### 智能小程序
 * [真机远程调试技术方案](adb-devtools/)
+
+
+### IOS
+* [如何通过替换签名 debug app](resign-app/)
 
 
 
