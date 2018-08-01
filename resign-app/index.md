@@ -35,7 +35,7 @@ build 工程
 
 ![](h7.png)
 
-在 finder 中产看 build 完成后的目录
+在 finder 中查看 build 完成后的目录
 
 ![](h8.png)
 
