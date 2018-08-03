@@ -1,6 +1,6 @@
 ## 真机远程调试技术方案
 
-### Android 插线远程调试
+### 插线远程调试
 ![adb overview](adb.png "adb overview")
 
 #### android 端打开远程调试端口
@@ -24,6 +24,11 @@ adb forward tcp:4000 localabstract:webview_devtools_remote_5481
 forward 转发之后就可以用浏览器打开 ```http://localhost:4000/json``` 查看到被调试的页面基础信息，其中 webSocketDebuggerUrl 字段是用于远程调试连接的 websocket
 
 上述操作封装在 [npm adb-tools](https://www.npmjs.com/package/adb-tools) / [源码](https://github.com/songyaru/adb-tools/)
+
+
+#### ios 端打开端口
+开发者账号 build 出的包默认打开了端口 ，参见 [如何替换签名实现 ios 远程调试](https://songyaru.github.io/doc-backup/resign-app/)
+
 
 ### Local Inspector Server 本地 inspector 服务 
 
