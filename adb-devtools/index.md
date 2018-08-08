@@ -63,6 +63,8 @@ socket.on('master-server-inspector-message', (data = {}) => {
 ``` 
 server端作为一个消息的中转站，通过 websocket 的双向通信，实现了 inspector 和 master 通信。（master 和 slave 通信类似）
 
+为了把小程序的页面和 server 建立通信，就需要在小程序中的页面插入一段连接 websocket 的脚本。
+
 ##### android 端内 webview 页面注入 js
 ``` java
 /**
@@ -163,6 +165,43 @@ socket.on('server-master-message', data => {...});
 adbTools.reversePort(8090, serverPort);// adb-tools 封装的 api
 ```
 把本地 PC 的 serverPort 转发到手机的8090端口，手机 webview 可以通过 localhost:8090 访问 PC 的 serverPort。
+
+
+##### ios 端内 webview 页面注入 js
+注入的 js 脚本类似 Android 端，核心就是一个 socket 连接。
+注入的方式和 android 方案不一样，采用远程调试协议中的 'Runtime.evaluate' 在页面中执行一段插入脚本
+```javascript
+
+var evaluateScript = function (socket, injectedFunction, params) {
+    socket.send(JSON.stringify({
+        "id": 0,
+        "method": "Runtime.evaluate",
+        "params": {"expression": "(" + injectedFunction.toString() + ").apply(null,[" + params.toString() + "])"}
+    }));
+};
+
+var insertScript = function (ip, port, isMaster) {
+    var head = document.head || document.getElementsByTagName('head')[0] || document.documentElement;
+    var script = document.createElement("script");
+    script.src = 'http://' + ip + ':' + port + '/preload/' + (isMaster ? 'master.js' : 'slave.js');
+    if (head) {
+        if (!head.getAttribute('data-inspector')) {
+            head.appendChild(script);
+            script.onload = script.onreadystatechange = function () {
+                script.onreadystatechange = script.onload = null;
+                head.setAttribute('data-inspector', 'true');
+                document.title += (isMaster ? '-master' : '-slave');
+            };
+        }
+        return true;
+    }
+    return false;
+};
+
+```
+当打开 http://localhost:8090 页面扫描所有设备的可调试页面时，查找到是智能小程序后自动的执行 ```evaluateScript``` 方法，把脚本插入页面。
+
+后续 android 也会改成这种方案，这样就不需要在端内改 html 文件
 
 #### 3. 让 inspector 支持同时连接 master 和 slave
 默认情况下，chrome 的 inspector 只支持一个 websocket 连接。 see [Connections.js # 246](https://github.com/songyaru/devtools-frontend/blob/smartapp/front_end/sdk/Connections.js)
