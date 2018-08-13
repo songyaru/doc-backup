@@ -10,13 +10,13 @@
 * [避免 enlargeBuffer 的工具方法](stringbuilderhelper/)
 * [利用 nodejs 自动生成 Android 语言包实现应用内切换多语言的方案](genlang/)
 
-
-### 智能小程序
-* [真机远程调试技术方案](adb-devtools/)
-
-
 ### IOS
 * [如何通过替换签名调试 app](resign-app/)
+
+### 远程调试相关
+* [如何定制 chrome 开发者工具](devtools/front-end/)
+* [真机远程调试技术方案](adb-devtools/)
+ 
 
 
 
