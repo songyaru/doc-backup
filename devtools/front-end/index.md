@@ -85,9 +85,10 @@ chrome.on('exit', function() {
 修改 [scripts/hosted_mode/server.js 第14行](https://github.com/ChromeDevTools/devtools-frontend/blob/master/scripts/hosted_mode/server.js) 
 ```
 const devtoolsFolder = path.resolve(path.join(__dirname, '../../../builder/output/'));
-
 ```
-将 devtoolsFolder 指向上面 build 的输出路径。再执行 ```npm start ``` 自动打开d Chrome Canary 。打开 http://localhost:9222/ 可以查看所有的可调试页面。
+将 devtoolsFolder 指向上面 build 的输出路径。再执行 ```npm start ``` 自动打开 Chrome Canary 。
+
+打开 http://localhost:9222/ 可以查看所有的可调试页面。
 
 ![](4.png)
 
