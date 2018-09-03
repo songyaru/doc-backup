@@ -14,8 +14,8 @@
 * [如何通过替换签名调试 app](resign-app/)
 
 ### 远程调试相关
-* [如何定制 chrome 开发者工具](devtools/front-end/)
 * [真机远程调试技术方案](adb-devtools/)
+* [如何定制 chrome 开发者工具](devtools/front-end/)
  
 
 

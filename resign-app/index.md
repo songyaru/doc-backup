@@ -69,27 +69,38 @@ security find-identity -p codesigning -v
 以微信为例，将 wechat.ipa 和 embedded.mobileprovision 放在用一目录，新建一个 wechat.sh 文件脚本内容如下：
 
 ```shell
-unzip -o wechat.ipa
+appPath="./wechat.ipa" # app 安装包相对路径
 
-rm -fr Payload/WeChat.app/Watch
+embeddedPath="./embedded.mobileprovision" # 签名相对路径
 
-rm -fr Payload/WeChat.app/Plugins
+appName="WeChat" # app名（查看 ipa 解压包后的名称）
 
-security cms -D -i embedded.mobileprovision > weixin_full.plist
+signCode="13C23E05758275D85ACC9B7E47CFA71F2EXXXXXX" # 账号签名字符串
 
-/usr/libexec/PlistBuddy -x -c 'Print:Entitlements' weixin_full.plist > weixin.plist
+appId="net.xxxx.helloWorld" #App ID Name
 
-cp embedded.mobileprovision Payload/WeChat.app/embedded.mobileprovision
 
-/usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier embedded.mobileprovision文件中的APPID" Payload/WeChat.app/Info.plist 
+unzip -o ${appPath}
 
-rm -rf Payload/WeChat.app/_CodeSignature/
+rm -fr Payload/${appName}.app/Watch
 
-/usr/bin/codesign --force --sign 获取开发者账号信息中的那一串字符 --entitlements weixin.plist Payload/WeChat.app/Frameworks/*
+rm -fr Payload/${appName}.app/Plugins
 
-/usr/bin/codesign --force --sign 获取开发者账号信息中的那一串字符 --entitlements weixin.plist Payload/WeChat.app/WeChat								 
+security cms -D -i ${embeddedPath} > embedded_full.plist
 
-ios-deploy --bundle Payload/WeChat.app
+/usr/libexec/PlistBuddy -x -c 'Print:Entitlements' embedded_full.plist > embedded.plist
+
+cp ${embeddedPath} Payload/${appName}.app/embedded.mobileprovision
+
+/usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier ${appId}" Payload/${appName}.app/Info.plist 
+
+rm -rf Payload/${appName}.app/_CodeSignature/
+
+/usr/bin/codesign --force --sign ${signCode} --entitlements embedded.plist Payload/${appName}.app/Frameworks/*
+
+/usr/bin/codesign --force --sign ${signCode} --entitlements embedded.plist Payload/${appName}.app/${appName}							
+	 
+ios-deploy --debug --bundle Payload/${appName}.app
 
 ```
 由于 ipa 文件现在 itunes 无法安装，因此脚本里面用到了 ios-deploy。
