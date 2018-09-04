@@ -73,7 +73,7 @@ appPath="./wechat.ipa" # app 安装包相对路径
 
 embeddedPath="./embedded.mobileprovision" # 签名相对路径
 
-appName="WeChat" # app名（查看 ipa 解压包后的名称）
+appName="WeChat" # app名（查看 ipa 解压后文件夹的名称）
 
 signCode="123456789123456789CC9B7E47CFA71F2EXXXXXX" # 账号签名字符串
 
@@ -98,7 +98,11 @@ rm -rf Payload/${appName}.app/_CodeSignature/
 
 /usr/bin/codesign --force --sign ${signCode} --entitlements embedded.plist Payload/${appName}.app/Frameworks/*
 
-/usr/bin/codesign --force --sign ${signCode} --entitlements embedded.plist Payload/${appName}.app/${appName}							
+/usr/bin/codesign --force --sign ${signCode} --entitlements embedded.plist Payload/${appName}.app/${appName}	
+
+rm embedded.plist
+
+rm embedded_full.plist				
 	 
 ios-deploy --debug --bundle Payload/${appName}.app
 
