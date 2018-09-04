@@ -75,7 +75,7 @@ embeddedPath="./embedded.mobileprovision" # 签名相对路径
 
 appName="WeChat" # app名（查看 ipa 解压包后的名称）
 
-signCode="13C23E05758275D85ACC9B7E47CFA71F2EXXXXXX" # 账号签名字符串
+signCode="123456789123456789CC9B7E47CFA71F2EXXXXXX" # 账号签名字符串
 
 appId="net.xxxx.helloWorld" #App ID Name
 
