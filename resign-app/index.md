@@ -25,15 +25,11 @@ Team 中选中刚才创建的账号 （注：如果之前已经有开发者账�
 
 ![](h5.png)   
 
-选择真机
+选择真机,点击运行按钮确保 helloWorld 能装到手机上
 
 ![](h6.png)   
-
-build 工程
-
-![](h7.png)   
-
-在 finder 中查看 build 完成后的目录
+ 
+随后在 finder 中查看 build 完成后的目录
 
 ![](h8.png)   
 
@@ -75,7 +71,7 @@ embeddedPath="./embedded.mobileprovision" # 签名相对路径
 
 appName="WeChat" # app名（查看 ipa 解压后文件夹的名称）
 
-signCode="123456789123456789CC9B7E47CFA71F2EXXXXXX" # 账号签名字符串
+signCode="xxxxxxxxxxxxxxxxxxCC9B7E47CFA71F2E404F2F" # 账号签名字符串
 
 appId="net.xxxx.helloWorld" #App ID Name
 
