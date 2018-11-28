@@ -105,7 +105,7 @@ ios-deploy --debug --bundle Payload/${appName}.app
 ```
 由于 ipa 文件现在 itunes 无法安装，因此脚本里面用到了 ios-deploy。
 
-该命令通过 ```npm install ios-deploy -g``` 安装
+该命令通过 ```npm install -g ios-deploy --unsafe-perm=true``` 安装
 
 最后在命令行中执行 ```sh wechat.sh``` 即可安装到手机中
 
