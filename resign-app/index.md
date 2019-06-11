@@ -57,7 +57,7 @@ security find-identity -p codesigning -v
 
 ### 获取 ipa
 由于新版的 itunes 不再提供 ipa 下载，并且苹果商店下载的 app 经过了加壳处理，因此还需要砸壳（dumpdecrypted）才能使用。
-为了省事，可以直接从某某助手的越狱商店下载已经砸壳的 app。具体请自行百度，本文不提供地址。
+为了省事，可以直接从同步助手的越狱商店下载已经砸壳的 app。具体请自行百度，本文不提供地址。
 
 
 
