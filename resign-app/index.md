@@ -69,7 +69,7 @@ appPath="./wechat.ipa" # app 安装包相对路径
 
 embeddedPath="./embedded.mobileprovision" # 签名相对路径
 
-signCode="xxxxxxxxxxxxxxxxxxCC9B7E47CFA71F2E404F2F" # 账号签名字符串
+signCode="xxxxxxxxxxxxxxxxxxCC9B7E47CFA71F2E404F2F" # 账号签名字符串,查看方式： security find-identity -p codesigning -v
 
 appId="net.xxxx.helloWorld" #App ID Name
 
