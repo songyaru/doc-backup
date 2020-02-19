@@ -69,38 +69,35 @@ appPath="./wechat.ipa" # app 安装包相对路径
 
 embeddedPath="./embedded.mobileprovision" # 签名相对路径
 
-appName="WeChat" # app名（查看 ipa 解压后文件夹的名称）
-
 signCode="xxxxxxxxxxxxxxxxxxCC9B7E47CFA71F2E404F2F" # 账号签名字符串
 
 appId="net.xxxx.helloWorld" #App ID Name
 
+unzip -o ${appPath} -d extracted
 
-unzip -o ${appPath}
+APPLICATION=$(ls extracted/Payload/) 
 
-rm -fr Payload/${appName}.app/Watch
+rm -fr extracted/Payload/${APPLICATION}/Watch
 
-rm -fr Payload/${appName}.app/Plugins
+rm -fr extracted/Payload/${APPLICATION}/Plugins
 
-security cms -D -i ${embeddedPath} > embedded_full.plist
+security cms -D -i ${embeddedPath} > extracted/embedded_full.plist
 
-/usr/libexec/PlistBuddy -x -c 'Print:Entitlements' embedded_full.plist > embedded.plist
+/usr/libexec/PlistBuddy -x -c 'Print:Entitlements' extracted/embedded_full.plist > extracted/embedded.plist
 
-cp ${embeddedPath} Payload/${appName}.app/embedded.mobileprovision
+cp ${embeddedPath} extracted/Payload/${APPLICATION}/embedded.mobileprovision
 
-/usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier ${appId}" Payload/${appName}.app/Info.plist 
+/usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier ${appId}" extracted/Payload/${APPLICATION}/Info.plist 
 
-rm -rf Payload/${appName}.app/_CodeSignature/
+rm -rf extracted/Payload/${APPLICATION}/_CodeSignature/
 
-/usr/bin/codesign --force --sign ${signCode} --entitlements embedded.plist Payload/${appName}.app/Frameworks/*
+/usr/bin/codesign --force --sign ${signCode} --entitlements extracted/embedded.plist extracted/Payload/${APPLICATION}/Frameworks/*
 
-/usr/bin/codesign --force --sign ${signCode} --entitlements embedded.plist Payload/${appName}.app/${appName}	
+/usr/bin/codesign --force --sign ${signCode} --entitlements extracted/embedded.plist extracted/Payload/${APPLICATION}/${appName}       
+   
+ios-deploy --bundle extracted/Payload/${APPLICATION}
 
-rm embedded.plist
-
-rm embedded_full.plist				
-	 
-ios-deploy --debug --bundle Payload/${appName}.app
+rm -fr extracted
 
 ```
 由于 ipa 文件现在 itunes 无法安装，因此脚本里面用到了 ios-deploy。
